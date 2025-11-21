@@ -3,6 +3,7 @@ package es.upm.dit.aled.lab5;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import es.upm.dit.aled.lab5.gui.EmergencyRoomGUI;
 import es.upm.dit.aled.lab5.gui.Position2D;
@@ -145,7 +146,8 @@ public class Patient extends Thread implements Runnable{
 	private void attendedAtLocation() {
 		try {
 			System.out.println("Patient " + this.number + " is being attended at " + this.location);
-			sleep(this.location.getTime());
+			int randomTime = ThreadLocalRandom.current().nextInt(-1000,1000);
+			sleep(this.location.getTime()+ randomTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			Thread.currentThread().interrupt(); // Restore interrupted status
