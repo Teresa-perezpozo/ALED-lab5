@@ -13,6 +13,13 @@ import es.upm.dit.aled.lab5.gui.Position2D;
  * @author rgarciacarmona
  */
 public class AreaQueue extends Area {
-
-	// TODO
+	
+	public AreaQueue (String name, int capacity, Position2D position) {
+		this.name = name;
+		this.capacity = capacity;
+		this.position=position;
+	}
+	
+	private LinkedList<Patient> Queue = new LinkedList<>();
+	
 }

@@ -40,7 +40,10 @@ public class Area {
 	 * @param position The location of the Area in the GUI.
 	 */
 	public Area(String name, int time, int capacity, Position2D position) {
-		// TODO
+		this.time = time;
+		this.capacity = capacity;
+		this.position = position;
+		this.name= name;
 		this.color = Color.GRAY; // Default color
 	}
 
@@ -98,15 +101,22 @@ public class Area {
 	 */
 	// TODO: method enter
 	public synchronized void enter(Patient p) {
+		System.out.println("Patient " + p.getNumber() + " trying to enter " + this.name);
+
 		try {
 			this.waiting++;
 		
 		while(this.numPatients>=this.capacity) {
+			System.out.println(" el paciente" + p.getNumber()+ " va a esperar pq ");
+
 			wait();
 			
 		}
+
 		this.numPatients++;
 		this.waiting--;
+		System.out.println(" el paciente" + p.getNumber()+ "por fín entra en "+ this.name);
+
 		
 		}catch(InterruptedException e ) {
 			e.printStackTrace();
@@ -122,6 +132,8 @@ public class Area {
 	 */
 	// TODO method exit
 	public synchronized void exit(Patient p) {
+		System.out.println(" el paciente" + p.getNumber()+ " sale porfin de "+ p.getLocation());
+
 		this.numPatients--;
 		notifyAll();
 	}
@@ -131,8 +143,8 @@ public class Area {
 	 * @return The capacity.
 	 */
 	// TODO: method getCapacity
-	public synchronized int getCapacity(Area area){
-		return area.capacity;
+	public synchronized int getCapacity(){
+		return this.capacity;
 	}
 	/**
 	 * Returns the current number of Patients being treated at the Area. This method must be thread safe.
@@ -140,8 +152,8 @@ public class Area {
 	 * @return The number of Patients being treated.
 	 */
 	// TODO: method getNumPatients
-	public synchronized int getNumPatients(Area area) {
-		return area.numPatients;
+	public synchronized int getNumPatients() {
+		return this.numPatients;
 	}
 	/**
 	 * Returns the current number of Patients waiting to be treated at the Area. This method must be thread safe.
@@ -149,8 +161,8 @@ public class Area {
 	 * @return The number of Patients waiting to be treated.
 	 */
 	// TODO method getWaiting
-	public synchronized int getWaiting(Area area) {
-	return area.waiting;
+	public synchronized int getWaiting() {
+	return this.waiting;
 	}
 	@Override
 	public int hashCode() {

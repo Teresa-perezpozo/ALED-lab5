@@ -164,22 +164,22 @@ public class Patient extends Thread implements Runnable{
 	 */
 	@Override
 	public void run() {
-		try {
-		while(true) {
+		
 			location.enter(this);
-			Thread.sleep(location.getTime());//está siendo atendido
+			attendedAtLocation();
 			location.exit(this);;
-			for(Transfer t :protocol) {
-				t.getTo().enter(this);//vamos a recorrer protocolo entero entrando
-				Thread.sleep(t.getTo().getTime());
-				t.getTo().exit(this);
+			while (indexProtocol < protocol.size()) {
+				advanceProtocol();
+				this.location.enter(this);
+				attendedAtLocation();
+				this.location.exit(this);
 			}
+			EmergencyRoomGUI.getInstance().removePatient(this);
+			System.out.println("El paciente " + this.number + " ya ha terminado su protocolo en " + this.location);
+			
 		}
 		// TODO
-	}catch(InterruptedException e ) {
-		e.printStackTrace();
-		Thread.currentThread().interrupt(); // Restore interrupted status
-	}
+	
 
-}
+
 }
