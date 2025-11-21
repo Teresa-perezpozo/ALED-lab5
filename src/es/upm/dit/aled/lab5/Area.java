@@ -39,6 +39,7 @@ public class Area {
 	 * @param capacity The number of Patients that can be treated at the same time.
 	 * @param position The location of the Area in the GUI.
 	 */
+	//IMPORTANTE CONSTRUIR
 	public Area(String name, int time, int capacity, Position2D position) {
 		this.time = time;
 		this.capacity = capacity;
@@ -143,6 +144,7 @@ public class Area {
 	 * @return The capacity.
 	 */
 	// TODO: method getCapacity
+	//importante qe no le damos nda
 	public synchronized int getCapacity(){
 		return this.capacity;
 	}
