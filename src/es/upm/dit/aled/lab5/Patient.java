@@ -20,7 +20,7 @@ import es.upm.dit.aled.lab5.gui.Position2D;
  * 
  * @author rgarciacarmona
  */
-public class Patient extends Thread {
+public class Patient extends Thread implements Runnable{
 
 	private int number;
 	private List<Transfer> protocol;
@@ -164,7 +164,22 @@ public class Patient extends Thread {
 	 */
 	@Override
 	public void run() {
+		try {
+		while(true) {
+			location.enter(this);
+			Thread.sleep(location.getTime());//está siendo atendido
+			location.exit(this);;
+			for(Transfer t :protocol) {
+				t.getTo().enter(this);//vamos a recorrer protocolo entero entrando
+				Thread.sleep(t.getTo().getTime());
+				t.getTo().exit(this);
+			}
+		}
 		// TODO
+	}catch(InterruptedException e ) {
+		e.printStackTrace();
+		Thread.currentThread().interrupt(); // Restore interrupted status
 	}
 
+}
 }

@@ -97,6 +97,22 @@ public class Area {
 	 * @param p The patient that wants to enter.
 	 */
 	// TODO: method enter
+	public synchronized void enter(Patient p) {
+		try {
+			this.waiting++;
+		
+		while(this.numPatients>=this.capacity) {
+			wait();
+			
+		}
+		this.numPatients++;
+		this.waiting--;
+		
+		}catch(InterruptedException e ) {
+			e.printStackTrace();
+			Thread.currentThread().interrupt();
+		}
+}
 	
 	/**
 	 * Thread safe method that allows a Patient to exit the area. After the Patient
@@ -105,28 +121,37 @@ public class Area {
 	 * @param p The patient that wants to enter.
 	 */
 	// TODO method exit
-	
+	public synchronized void exit(Patient p) {
+		this.numPatients--;
+		notifyAll();
+	}
 	/**
 	 * Returns the capacity of the Area. This method must be thread safe.
 	 * 
 	 * @return The capacity.
 	 */
 	// TODO: method getCapacity
-	
+	public synchronized int getCapacity(Area area){
+		return area.capacity;
+	}
 	/**
 	 * Returns the current number of Patients being treated at the Area. This method must be thread safe.
 	 * 
 	 * @return The number of Patients being treated.
 	 */
 	// TODO: method getNumPatients
-
+	public synchronized int getNumPatients(Area area) {
+		return area.numPatients;
+	}
 	/**
 	 * Returns the current number of Patients waiting to be treated at the Area. This method must be thread safe.
 	 * 
 	 * @return The number of Patients waiting to be treated.
 	 */
 	// TODO method getWaiting
-
+	public synchronized int getWaiting(Area area) {
+	return area.waiting;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(name);
