@@ -21,7 +21,7 @@ public class AreaQueue extends Area {
 //	2 métodos y 1 atributo
 	//he puesto el horno a y 10
 	
-	public AreaQueue(String name, int time, int capacity, Position2D position) {
+	public AreaQueue(String name, int time, int capacity, Position2D position, int numDoctor) {
 		super(name, time, capacity, position);
 		
 	}
@@ -34,7 +34,7 @@ public class AreaQueue extends Area {
 			Queue.add(p);
 			waiting++;//se me había olvidado
 		
-		while(this.numPatients>=this.capacity||this.Queue.peek() != p) {
+		while(this.numPatients>=this.numDoctor||this.Queue.peek() != p) {
 			System.out.println(" el paciente" + p.getNumber()+ " se pone a la cola ");
 			
 			wait();
@@ -52,4 +52,42 @@ public class AreaQueue extends Area {
 			Thread.currentThread().interrupt();
 		}
 }
+	
+	//extra 2
+	//también habría que quitar el capacity del resot de sitios pero más o menos atender sería así
+	public synchronized Patient obtenerSigPaciente()throws InterruptedException {
+		while(Queue.isEmpty()) {
+			wait();
+		}
+		Patient pacienteSig = Queue.peek();
+		return pacienteSig;		
+		
+	}
+//	public synchronized void enter(Patient p) {
+//		System.out.println("Patient " + p.getNumber() + " trying to enter " + this.name);
+//
+//		try {
+//			Queue.add(p);
+//			waiting++;//se me había olvidado
+//		
+//		while(this.numPatients>=this.capacity||this.Queue.peek() != p) {
+//			System.out.println(" el paciente" + p.getNumber()+ " se pone a la cola ");
+//			
+//			wait();
+//			
+//		}
+//
+//		this.numPatients++;
+//		this.waiting--;
+//		System.out.println(" el paciente" + Queue.peek()+ "por fín entra en "+ this.name);
+//		Queue.remove(p);
+//
+//		
+//		}catch(InterruptedException e ) {
+//			e.printStackTrace();
+//			Thread.currentThread().interrupt();
+//		}
+}
+//
+	
 }

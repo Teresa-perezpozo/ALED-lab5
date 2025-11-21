@@ -147,6 +147,7 @@ public class Patient extends Thread implements Runnable{
 		try {
 			System.out.println("Patient " + this.number + " is being attended at " + this.location);
 			int randomTime = ThreadLocalRandom.current().nextInt(-1000,1000);
+			System.out.println("el tiempo ramdom añadido est vez será "+ randomTime);
 			sleep(this.location.getTime()+ randomTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
